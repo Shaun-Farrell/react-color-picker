@@ -5,14 +5,16 @@ import {
   setHexInput,
 } from "../utils/pickerHelper";
 import "../App.css";
-const HEIGHT = 350;
+const SQ_SIDE = 350;
 
 export default function Picker() {
   const canvasRef = useRef(null);
   const canvasSmallRef = useRef(null);
   const [hex, setHex] = useState("#FF0000");
-  const [, setLoadState] = useState("loading");
   const [target, setTarget] = useState([255, 0, 0]);
+  const [cursor, setCursor] = useState({ x: SQ_SIDE - 10, y: -10 });
+  const [cursorPnl, setCursorPnl] = useState({ y: -10 });
+  const resetCursor = () => setCursor({ x: SQ_SIDE - 10, y: -10 });
 
   useEffect(() => {
     const canvas: any = canvasRef.current;
@@ -27,7 +29,7 @@ export default function Picker() {
     for (let x = 0; x <= width; x++) {
       addGradient(context, x, diff, width);
     }
-    setLoadState("loaded");
+    // setLoadState("loaded");
     const canvasSmall: any = canvasSmallRef.current;
     const contextSmall = canvasSmall?.getContext("2d");
     let gradient = context.createLinearGradient(
@@ -57,16 +59,33 @@ export default function Picker() {
   return (
     <>
       <div className="container">
-        <canvas
-          onMouseDown={(e) => setHexInput(e, setHex, target, HEIGHT, HEIGHT)}
-          className="canvas"
-          ref={canvasRef}
-        />
-        <canvas
-          onMouseDown={(e) => setTargetColor(e, setTarget, setHex, HEIGHT)}
-          className="canvasSmall"
-          ref={canvasSmallRef}
-        />
+        <div className="rel">
+          <canvas
+            onMouseDown={(e) =>
+              setHexInput(e, setHex, setCursor, target, SQ_SIDE, SQ_SIDE)
+            }
+            className="canvas"
+            ref={canvasRef}
+          />
+          <div className="circle" style={{ top: cursor.y, left: cursor.x }} />
+        </div>
+        <div className="rel">
+          <canvas
+            onMouseDown={(e) =>
+              setTargetColor(
+                e,
+                setTarget,
+                setHex,
+                setCursorPnl,
+                resetCursor,
+                SQ_SIDE
+              )
+            }
+            className="canvasSmall"
+            ref={canvasSmallRef}
+          />
+          <div className="circle" style={{ top: cursorPnl.y, left: 30 }} />
+        </div>
       </div>
       <div className="container">
         <div className="label">HEX: </div>

@@ -11,6 +11,8 @@ export const setTargetColor = (
   e: React.MouseEvent<HTMLCanvasElement, MouseEvent>,
   setTarget: any,
   setHex: any,
+  setCursorPnl: any,
+  resetCursor: any,
   height: number
 ) => {
   e.preventDefault();
@@ -21,12 +23,15 @@ export const setTargetColor = (
   const g = calculateGreen(num);
   const b = calculateBlue(num);
   setTarget([r, g, b]);
+  setCursorPnl({ y: y - 10 });
+  resetCursor();
   setHex(`#${rgbToHex(r, g, b)}`);
 };
 
 export const setHexInput = (
   e: React.MouseEvent<HTMLCanvasElement, MouseEvent>,
   setHex: any,
+  setCursor: any,
   target: number[],
   height: number,
   width: number
@@ -39,6 +44,7 @@ export const setHexInput = (
   const xAdjusted = adjustForXMovement(target, x / width);
   const yAdjusted = adjustForYMovement(xAdjusted, y / height);
   setHex(`#${rgbToHex(yAdjusted[0], yAdjusted[1], yAdjusted[2])}`);
+  setCursor({ x: x - 10, y: y - 10 });
 };
 
 export const addGradient = (
