@@ -11,3 +11,7 @@ yarn test
 # Start Development
 yarn start
 ```
+
+Hosted on gh-pages below:
+
+https://shaun-farrell.github.io/react-color-picker/
