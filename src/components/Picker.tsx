@@ -25,10 +25,9 @@ export default function Picker() {
     ];
     const width = context.canvas.width;
     for (let x = 0; x <= width; x++) {
-      addGradient(context, x, diff);
+      addGradient(context, x, diff, width);
     }
     setLoadState("loaded");
-    console.log("finished paint...");
     const canvasSmall: any = canvasSmallRef.current;
     const contextSmall = canvasSmall?.getContext("2d");
     let gradient = context.createLinearGradient(

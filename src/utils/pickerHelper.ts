@@ -15,7 +15,7 @@ export const setTargetColor = (
 ) => {
   e.preventDefault();
   let y = e.nativeEvent.offsetY;
-  y = y < 0 ? 0 : y; // handle border
+  y = y < 0 ? 0 : y > height ? height : y; // handle border
   const num = y / height;
   const r = calculateRed(num);
   const g = calculateGreen(num);
@@ -44,15 +44,16 @@ export const setHexInput = (
 export const addGradient = (
   context: CanvasRenderingContext2D,
   start: number,
-  diff: number[]
+  diff: number[],
+  width: number
 ) => {
-  let gradientBig = context.createLinearGradient(
+  const gradientBig = context.createLinearGradient(
     0,
     0,
     0,
     context.canvas.height
   );
-  const multiplier = (300 / 255) * start;
+  const multiplier = (width / 255) * start;
   const r = 255 - diff[0] * (multiplier / 255);
   const g = 255 - diff[1] * (multiplier / 255);
   const b = 255 - diff[2] * (multiplier / 255);
