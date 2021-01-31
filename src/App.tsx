@@ -5,7 +5,7 @@ import "./App.css";
 function App() {
   return (
     <div className="App">
-      <h1>Color Picker</h1>
+      <h1>Colour Picker</h1>
       <Picker />
     </div>
   );
