@@ -63,7 +63,10 @@ export const addGradient = (
   const r = 255 - diff[0] * (multiplier / 255);
   const g = 255 - diff[1] * (multiplier / 255);
   const b = 255 - diff[2] * (multiplier / 255);
-  gradientBig.addColorStop(0, `rgb(${r}, ${g}, ${b})`);
+  gradientBig.addColorStop(
+    0,
+    `rgb(${Math.round(r)}, ${Math.round(g)}, ${Math.round(b)})`
+  );
   gradientBig.addColorStop(1, "rgb(0, 0, 0)");
   context.fillStyle = gradientBig;
   context.fillRect(start, 0, 1, context.canvas.height);
