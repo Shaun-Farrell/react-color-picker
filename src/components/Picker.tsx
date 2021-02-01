@@ -1,9 +1,5 @@
 import React, { useRef, useEffect, useState } from "react";
-import {
-  setTargetColor,
-  addGradient,
-  setHexInput,
-} from "../utils/pickerHelper";
+import { setTargetColor, addGradient, setNewHex } from "../utils/pickerHelper";
 import "../App.css";
 const SQ_SIDE = 350;
 
@@ -11,6 +7,7 @@ export default function Picker() {
   const canvasRef = useRef(null);
   const canvasPanelRef = useRef(null);
   const [hex, setHex] = useState("#FF0000");
+  const [mouseDown, setMouseDown] = useState({ main: false, panel: false });
   const [target, setTarget] = useState([255, 0, 0]);
   const [cursor, setCursor] = useState({ x: SQ_SIDE - 10, y: -10 });
   const [cursorPnl, setCursorPnl] = useState({ y: -10 });
@@ -60,9 +57,31 @@ export default function Picker() {
       <div className="container">
         <div className="relative-container">
           <canvas
-            onMouseDown={(e) =>
-              setHexInput(e, setHex, setCursor, target, SQ_SIDE, SQ_SIDE)
+            onMouseDown={(e) => {
+              e.preventDefault();
+              const x = e.nativeEvent.offsetX;
+              const y = e.nativeEvent.offsetY;
+              setMouseDown((prevState) => ({ ...prevState, main: true }));
+              setNewHex({ x, y }, setHex, setCursor, target, SQ_SIDE, SQ_SIDE);
+            }}
+            onMouseUp={() =>
+              setMouseDown((prevState) => ({ ...prevState, main: false }))
             }
+            onMouseOut={() =>
+              setMouseDown((prevState) => ({ ...prevState, main: false }))
+            }
+            onMouseMove={(e) => {
+              if (mouseDown.main) {
+                setNewHex(
+                  { x: e.nativeEvent.offsetX, y: e.nativeEvent.offsetY },
+                  setHex,
+                  setCursor,
+                  target,
+                  SQ_SIDE,
+                  SQ_SIDE
+                );
+              }
+            }}
             className="canvas"
             ref={canvasRef}
           />
@@ -70,16 +89,36 @@ export default function Picker() {
         </div>
         <div className="relative-container">
           <canvas
-            onMouseDown={(e) =>
+            onMouseDown={(e) => {
+              e.preventDefault();
+              setMouseDown((prevState) => ({ ...prevState, panel: true }));
               setTargetColor(
-                e,
+                e.nativeEvent.offsetY,
                 setTarget,
                 setHex,
                 setCursorPnl,
                 resetCursor,
                 SQ_SIDE
-              )
+              );
+            }}
+            onMouseUp={() =>
+              setMouseDown((prevState) => ({ ...prevState, panel: false }))
             }
+            onMouseOut={() =>
+              setMouseDown((prevState) => ({ ...prevState, panel: false }))
+            }
+            onMouseMove={(e) => {
+              if (mouseDown.panel) {
+                setTargetColor(
+                  e.nativeEvent.offsetY,
+                  setTarget,
+                  setHex,
+                  setCursorPnl,
+                  resetCursor,
+                  SQ_SIDE
+                );
+              }
+            }}
             className="canvasSmall"
             ref={canvasPanelRef}
           />

@@ -8,15 +8,14 @@ import {
 } from "./rgbCalcs";
 
 export const setTargetColor = (
-  e: React.MouseEvent<HTMLCanvasElement, MouseEvent>,
+  yCoord: number,
   setTarget: any,
   setHex: any,
   setCursorPnl: any,
   resetCursor: any,
   height: number
 ) => {
-  e.preventDefault();
-  let y = e.nativeEvent.offsetY;
+  let y = yCoord;
   y = y < 0 ? 0 : y > height ? height : y; // handle border
   const num = y / height;
   const r = calculateRed(num);
@@ -28,17 +27,15 @@ export const setTargetColor = (
   setHex(`#${rgbToHex(r, g, b)}`);
 };
 
-export const setHexInput = (
-  e: React.MouseEvent<HTMLCanvasElement, MouseEvent>,
+export const setNewHex = (
+  coords: { x: number; y: number },
   setHex: any,
   setCursor: any,
   target: number[],
   height: number,
   width: number
 ) => {
-  e.preventDefault();
-  let x = e.nativeEvent.offsetX;
-  let y = e.nativeEvent.offsetY;
+  let { x, y } = coords;
   y = y < 0 ? 0 : y > height ? height : y; // handle border
   x = x < 0 ? 0 : x > width ? width : x; // handle border
   const xAdjusted = adjustForXMovement(target, x / width);
