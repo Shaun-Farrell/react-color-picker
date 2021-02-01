@@ -61,6 +61,7 @@
   z-index: 99;
   position: absolute;
   top: 0px;
+  pointer-events: none;
 }
 
 .rel {
