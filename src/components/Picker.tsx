@@ -83,6 +83,7 @@ export default function Picker() {
               }
             }}
             className="canvas"
+            data-testid="canvas"
             ref={canvasRef}
           />
           <div className="circle" style={{ top: cursor.y, left: cursor.x }} />
@@ -119,7 +120,8 @@ export default function Picker() {
                 );
               }
             }}
-            className="canvasSmall"
+            className="canvasPanel"
+            data-testid="canvasPanel"
             ref={canvasPanelRef}
           />
           <div className="circle" style={{ top: cursorPnl.y, left: 30 }} />
