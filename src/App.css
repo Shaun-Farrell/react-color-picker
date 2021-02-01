@@ -64,7 +64,7 @@
   pointer-events: none;
 }
 
-.rel {
+.relative-container {
   position: relative;
 }
 

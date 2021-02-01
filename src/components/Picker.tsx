@@ -9,7 +9,7 @@ const SQ_SIDE = 350;
 
 export default function Picker() {
   const canvasRef = useRef(null);
-  const canvasSmallRef = useRef(null);
+  const canvasPanelRef = useRef(null);
   const [hex, setHex] = useState("#FF0000");
   const [target, setTarget] = useState([255, 0, 0]);
   const [cursor, setCursor] = useState({ x: SQ_SIDE - 10, y: -10 });
@@ -29,9 +29,8 @@ export default function Picker() {
     for (let x = 0; x <= width; x++) {
       addGradient(context, x, diff, width);
     }
-    // setLoadState("loaded");
-    const canvasSmall: any = canvasSmallRef.current;
-    const contextSmall = canvasSmall?.getContext("2d");
+    const canvasPanel: any = canvasPanelRef.current;
+    const contextSmall = canvasPanel?.getContext("2d");
     let gradient = context.createLinearGradient(
       0,
       0,
@@ -59,7 +58,7 @@ export default function Picker() {
   return (
     <>
       <div className="container">
-        <div className="rel">
+        <div className="relative-container">
           <canvas
             onMouseDown={(e) =>
               setHexInput(e, setHex, setCursor, target, SQ_SIDE, SQ_SIDE)
@@ -69,7 +68,7 @@ export default function Picker() {
           />
           <div className="circle" style={{ top: cursor.y, left: cursor.x }} />
         </div>
-        <div className="rel">
+        <div className="relative-container">
           <canvas
             onMouseDown={(e) =>
               setTargetColor(
@@ -82,7 +81,7 @@ export default function Picker() {
               )
             }
             className="canvasSmall"
-            ref={canvasSmallRef}
+            ref={canvasPanelRef}
           />
           <div className="circle" style={{ top: cursorPnl.y, left: 30 }} />
         </div>

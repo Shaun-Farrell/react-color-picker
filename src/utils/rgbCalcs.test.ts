@@ -23,25 +23,25 @@ test("Fraction of 0 should return 0 for green", () => {
   expect(val).toBe(0);
 });
 
-test("Fraction above 0.75 should return 255", () => {
+test("Fraction above 0.75 should return 255 for red", () => {
   const val = calculateRed(0.8);
   expect(typeof val === "number");
   expect(val).toBe(255);
 });
 
-test("Fraction below 0.15 should return 255", () => {
+test("Fraction below 0.15 should return 255 for red", () => {
   const val = calculateRed(0.14);
   expect(typeof val === "number");
   expect(val).toBe(255);
 });
 
-test("Fraction of 0.65 should return 85", () => {
+test("Fraction of 0.65 should return 85 for red", () => {
   const val = calculateRed(0.65);
-  console.log("val:", val);
   expect(typeof val === "number");
   expect(val).toBe(85);
 });
 
+// Test scale helper function
 test("Fraction of 0.66 should return 102", () => {
   const val = calcScale(0.66, 0.6, 0.15, false);
   expect(typeof val === "number");
@@ -51,7 +51,7 @@ test("Fraction of 0.66 should return 102", () => {
 test("Fraction of 0.20 should return 170", () => {
   const val = calcScale(0.2, 0.15, 0.15, true);
   expect(typeof val === "number");
-  expect(val).toBe(255 - 85);
+  expect(val).toBe(170);
 });
 
 test("Fraction of 0.25 should return 85", () => {
